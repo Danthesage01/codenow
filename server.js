@@ -16,12 +16,7 @@ import errorHandlingMiddleware from "./middleware/errorHandling.js";
 import xss from "xss-clean"
 import helmet from "helmet"
 import mongoSanitize from "express-mongo-sanitize"
-
-
-
 const app = express();
-
-
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 app.use(express.static(path.resolve(__dirname, "./client/build")))

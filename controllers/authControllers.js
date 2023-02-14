@@ -21,7 +21,6 @@ const register = async (req, res) => {
   const verificationToken = crypto.randomBytes(40).toString("hex");
 
   const user = await User.create({ email, name, password, verificationToken });
-  // const origin = "http://localhost:3000";
   // const origin = "http://localhost:5000";
   const origin = "https://codenowschool.onrender.com";
 

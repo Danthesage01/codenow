@@ -19,8 +19,8 @@ max: 10,
 message: "Too many requests. Please try again after 15 minutes"
 })
 
-router.route("/register").post(register);
-router.route("/login").post(login);
+router.route("/register").post(apiLimiter,register);
+router.route("/login").post( apiLimiter,login);
 router.route("/logout").get(logout);
 router.route("/verify-email").post(verifyEmail);
 router.route("/forgot-password").post(forgotPassword);
