@@ -122,14 +122,12 @@ const forgotPassword = async (req, res) => {
 // Reset Password
 const resetPassword = async (req, res) => {
   const { token, email, password } = req.body;
-  
+
   // const tempOrigin = req.get("origin");
   // const protocol = req.protocol;
   // const host = req.get("host");
   // const forwardedHost = req.get("x-forwarded-host");
   // const forwardedProtocol = req.get("x-forwarded-proto");
-
-
 
   if (!token || !email || !password) {
     throw new BadRequestError("Please provide all values");

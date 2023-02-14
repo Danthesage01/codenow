@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import FormRow from "../../components/FormRow/FormRow";
 import Button, { BUTTON_TYPE_CLASSES } from "../../components/Button/Button";
 import { useAuthGlobalContext } from "../../context/authContext/authContext";
+import { toast } from "react-toastify";
 const SignIn = () => {
   const { loginUser, user, isLoading } = useAuthGlobalContext();
   const [formData, setFormData] = useState({
@@ -42,13 +43,12 @@ const SignIn = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email === "" || password === "") {
-      alert("Please fill in all fields");
+      toast.warning("Please fill in all fields");
       return;
     }
 
     const currentUser = { email, password };
     loginUser(currentUser);
-    // resetForm();
   };
 
   useEffect(() => {
