@@ -7,28 +7,40 @@ import {
   FormTitle,
   FormText,
   FormLink,
-  Info
-} from "./RegisterStyles";
+  Info,
+} from "./ResetPasswordStyles";
 import { useNavigate } from "react-router-dom";
 import FormRow from "../../components/FormRow/FormRow";
 import Button, { BUTTON_TYPE_CLASSES } from "../../components/Button/Button";
-import { useAuthGlobalContext } from "../../context/authContext/authContext";
 import { toast } from "react-toastify";
-const Register = () => {
-  const { user, registerUser, isLoading,  } = useAuthGlobalContext();
+import { useAuthGlobalContext } from "../../context/authContext/authContext.js";
+
+import { useLocation } from "react-router-dom";
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+const ResetPassword = () => {
+  const {
+    isLoading,
+    verifyEmail,
+    isVerifyLoading,
+    isVerifyError,
+    resetPassword,
+  } = useAuthGlobalContext();
+
+  const query = useQuery();
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
     password: "",
     password2: "",
   });
-  const { name, email, password, password2 } = formData;
+  const { password, password2 } = formData;
 
-  const [isVerifyEmail, setIsVerifiedEmail] = useState(false);
+  const [isPassword, setResetPassword] = useState(false);
+
   const resetForm = () => {
     setFormData({
-      name: "",
-      email: "",
       password: "",
       password2: "",
     });
@@ -46,8 +58,8 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name === "" || email === "" || password === "" || password2 === "") {
-      toast.warning("Please fill in all fields");
+    if (password === "" || password2 === "") {
+      toast.warning("Please fill all fields");
       return;
     }
 
@@ -55,53 +67,41 @@ const Register = () => {
       toast.error("Password do not match");
       return;
     }
-
-    const currentUser = { name, email, password };
-    registerUser(currentUser);
-    setIsVerifiedEmail(true)
-    if (user) {
-      resetForm();
-    }
+    setResetPassword(true);
+    resetPassword(query, password);
+    resetForm();
   };
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     if (isPassword) {
+  //       navigate("/sign-in");
+  //     }
+  //   }, 3000);
+  // }, [isPassword, navigate]);
 
   return (
     <Div>
       <Logo />
       <Section>
-        {isVerifyEmail? (
+        {isPassword ? (
           <Info>
             <FormTitle>Check Your Email</FormTitle>
             <FormText>
-              We have sent an email confirmation link to
+              You have successfully reset your password reset
               <br />
-              {user ? user?.email : "Loading..."}
-              <br />
-              Please login to the email to confirm.
+              Please login with your new password.
             </FormText>
+            <FormLink
+              to="/sign-in"
+              center="true"
+            >
+              Login
+            </FormLink>
           </Info>
         ) : (
           <Form>
-            <FormTitle>Register</FormTitle>
-            <FormRow
-              htmlFor="name"
-              labelText="Name"
-              type="name"
-              name="name"
-              value={name}
-              onChange={handleChange}
-              required="required"
-              autoComplete="false"
-            />
-            <FormRow
-              htmlFor="email"
-              labelText="Email"
-              type="email"
-              name="email"
-              value={email}
-              onChange={handleChange}
-              required="required"
-              autoComplete="false"
-            />
+            <FormTitle>Reset Password</FormTitle>
             <FormRow
               htmlFor="password"
               labelText="Password"
@@ -126,13 +126,9 @@ const Register = () => {
               type="submit"
               buttonType={BUTTON_TYPE_CLASSES.block}
               onClick={handleSubmit}
-              disabled={isLoading}
             >
-              {isLoading ? "Loading..." : "Register"}
+              Submit
             </Button>
-            <FormText>
-              Already registered? <FormLink to="/sign-in">Login</FormLink>
-            </FormText>
           </Form>
         )}
       </Section>
@@ -140,4 +136,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default ResetPassword;

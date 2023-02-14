@@ -6,7 +6,9 @@ import { Nav } from "./LogoStyle";
 const Logo = () => {
   return (
     <Nav>
+    <Link to="/">
       <Img src={logo} />
+    </Link>
     </Nav>
   );
 };

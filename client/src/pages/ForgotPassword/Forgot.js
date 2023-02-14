@@ -9,61 +9,55 @@ import {
   FormLink,
   Info,
 } from "./ForgotStyle";
-import { json, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FormRow from "../../components/FormRow/FormRow";
 import Button, { BUTTON_TYPE_CLASSES } from "../../components/Button/Button";
+import { toast } from "react-toastify";
+import { useAuthGlobalContext } from "../../context/authContext/authContext";
 
-const userEmail = JSON.parse(localStorage.getItem("userEmail"))
-console.log(userEmail);
 const ForgotPassword = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-  });
-  const { email } = formData;
+  const { forgotPassword, userEmail: localUserEmail } = useAuthGlobalContext();
+
+  const [userEmail, setUserEmail] = useState("");
 
   const [resetPassword, setResetPassword] = useState(false);
 
-  const navigate = useNavigate();
-
   const resetForm = () => {
-    setFormData({
-      email: "",
+    setUserEmail({
+      userEmail: "",
     });
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => {
+  //     return {
+  //       ...prev,
+  //       [name]: value,
+  //     };
+  //   });
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email === "") {
-      alert("Please fill in your email");
+    if (userEmail === "") {
+      toast.warning("Please fill in your email");
       return;
     }
-    console.log(formData);
-    localStorage.setItem("userEmail", JSON.stringify(formData.email))
+
     setResetPassword(true);
+    forgotPassword(userEmail);
     resetForm();
-    // navigate("/sign-in");
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (resetPassword) {
-        navigate("/sign-in");
-      }
-    }, 3000);
-  }, [resetPassword, navigate]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     if (resetPassword) {
+  //       navigate("/sign-in");
+  //     }
+  //   }, 3000);
+  // }, [resetPassword, navigate]);
 
-
-  
   return (
     <Div>
       <Logo />
@@ -74,30 +68,28 @@ const ForgotPassword = () => {
             <FormText>
               We have sent a password reset link to
               <br />
-              {console.log(formData.email, "info form")}
-              {userEmail}.
+              {console.log(userEmail, "info form")}
+              {localUserEmail ? localUserEmail : "Loading..."}.
               <br />
               Please login to the email to reset your password.
             </FormText>
-            <FormLink
+            {/* <FormLink
               to="/sign-in"
-            //  center = {theme.features.center}
-            //  center = "center"
-             center= "true"
+              center="true"
             >
-              Login 
-            </FormLink>
+              Login
+            </FormLink> */}
           </Info>
         ) : (
           <Form>
-            <FormTitle>Reset Password</FormTitle>
+            <FormTitle>Forgot Password</FormTitle>
             <FormRow
               htmlFor="email"
               labelText="Email"
               type="email"
               name="email"
-              value={email}
-              onChange={handleChange}
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
               required="required"
               autoComplete="false"
             />

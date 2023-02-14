@@ -10,9 +10,9 @@ const sendVerificationEmail = async ({
 
   const message = `<p>Click this link to confirm your email: <a href="${verifyEmail}">Verify Email</a></p>`;
 
+
   return sendEmail({
-    to,
-    email,
+    to: email,
     subject: "Email Confirmation",
     html: `<h4>Hello, ${name}</h4>
   ${message}

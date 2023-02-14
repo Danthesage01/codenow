@@ -8,6 +8,8 @@ import {
   Forgot,
   Error,
   ProtectedRoute,
+  ResetPassword,
+  Verify,
 } from "./pages";
 import {
   AllCourses,
@@ -18,6 +20,7 @@ import {
 } from "./pages/Dashboard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// import CheckEmail from "./pages/CheckEmail/CheckEmail";
 function App() {
   return (
     <Router>
@@ -49,7 +52,7 @@ function App() {
           />
         </Route>
         <Route
-          path="/welcome"
+          path="welcome"
           element={<LandingPage />}
         />
         <Route
@@ -61,8 +64,16 @@ function App() {
           element={<Register />}
         />
         <Route
-          path="forgot-password"
+          path="user/verify-email"
+          element={<Verify />}
+        />
+        <Route
+          path="user/forgot-password"
           element={<Forgot />}
+        />
+        <Route
+          path="user/reset-password"
+          element={<ResetPassword />}
         />
         <Route
           path="*"

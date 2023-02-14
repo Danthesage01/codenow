@@ -5,7 +5,15 @@ import Error from "./ErrorPage/ErrorPage";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import LandingPage from "./LandingPage/LandingPage";
 import Verify from "./VerifyEmail/Verify";
+import ResetPassword from "./ResetPassword/ResetPassword";
 
-
-
-export { Verify, SignIn, Register, Forgot, Error, ProtectedRoute, LandingPage };
+export {
+  ResetPassword,
+  Verify,
+  SignIn,
+  Register,
+  Forgot,
+  Error,
+  ProtectedRoute,
+  LandingPage,
+};

@@ -5,6 +5,8 @@ export const theme = {
     xsmText: "0.675rem",
     smText: "0.875rem",
     lgText: "1.2rem",
+    xlgText: "2.5rem",
+    xmdText: "1.5rem",
     mdText: "1rem",
   },
   colors: {

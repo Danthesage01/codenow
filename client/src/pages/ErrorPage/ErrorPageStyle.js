@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Main = styled.main`
-  min-height: 100vh;
+  min-height: 80vh;
   text-align: center;
   display: flex;
   align-items: center;

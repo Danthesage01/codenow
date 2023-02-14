@@ -85,7 +85,7 @@ const SignIn = () => {
             required="required"
             autoComplete="false"
           />
-          <ForgotPassword to="/forgot-password">
+          <ForgotPassword to="/user/forgot-password">
             forgot password?
           </ForgotPassword>
           <Button

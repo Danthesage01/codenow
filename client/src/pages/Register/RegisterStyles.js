@@ -50,3 +50,18 @@ export const FormLink = styled(Link)`
     padding-bottom: 0.15rem;
     /* border-bottom: 2px solid ${props => props.theme.colors.cGreen}; */
 `
+export const Info = styled.form`
+  width: 90vw;
+  max-width: 500px;
+  background: ${(props) => props.theme.colors.cWhite};
+  border-radius: ${(props) => props.theme.features.borderRadius};
+  box-shadow: ${(props) => props.theme.shadows.shawdow2};
+  padding: 2.5rem 2rem;
+  margin: 3rem auto;
+  transition: ${(props) => props.theme.features.transition};
+  border-bottom: 5px solid ${(props) => props.theme.colors.cGreen};
+
+  &:hover {
+    box-shadow: ${(props) => props.theme.shadows.shawdow4};
+  }
+`;
