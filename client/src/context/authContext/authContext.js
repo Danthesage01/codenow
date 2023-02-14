@@ -20,6 +20,7 @@ import {
   RESET_PASSWORD_BEGIN,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_ERROR,
+  TOGGLE_SIDEBAR
 } from "./actions";
 import { toast } from "react-toastify";
 
@@ -33,17 +34,25 @@ const initialState = {
   isVerifyLoading: false,
   isVerifyError: false,
   userEmail: null,
+  isSidebarToggle: false
 };
 
 const AuthAppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
+
+
+  // TOGGLE SIDEBAR
+  const toggleSidebar = () =>{
+    console.log(state.isSidebarToggle)
+    dispatch({ type: TOGGLE_SIDEBAR})
+  }
 
   // REGISTER
   const registerUser = async (currentUser) => {
     dispatch({ type: REGISTER_USER_BEGIN });
     try {
       const { data } = await axios.post("/api/v1/auth/register", currentUser);
-      const { user, msg } = data;
+      const { user} = data;
       dispatch({ type: REGISTER_USER_SUCCESS, payload: { user } });
     } catch (error) {
       dispatch({ type: REGISTER_USER_ERROR });
@@ -129,17 +138,19 @@ const AuthAppProvider = ({ children }) => {
 
   // LOGOUT
   const logoutUser = async () => {
-    const { data } = await axios.get("/api/v1/auth/logout");
+    await axios.get("/api/v1/auth/logout");
     dispatch({ type: LOGOUT_USER });
   };
 
   useEffect(() => {
     getCurrentUser();
+    // eslint-disable-next-line
   }, []);
   return (
     <AuthAppContext.Provider
       value={{
         ...state,
+        toggleSidebar,
         registerUser,
         loginUser,
         logoutUser,

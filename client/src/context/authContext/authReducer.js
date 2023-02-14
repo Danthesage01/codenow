@@ -17,6 +17,7 @@ import {
   RESET_PASSWORD_BEGIN,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_ERROR,
+  TOGGLE_SIDEBAR,
 } from "./actions";
 
 const authReducer = (state, action) => {
@@ -126,11 +127,18 @@ const authReducer = (state, action) => {
         userLoading: false,
         user: action.payload.user,
       };
+    // LOGOUT
     case LOGOUT_USER:
       return {
         ...state,
         userLoading: false,
         user: null,
+      };
+    // TOGGLE SIDEBAR
+    case TOGGLE_SIDEBAR:
+      return {
+        ...state,
+        isSidebarToggle: !state.isSidebarToggle,
       };
     default:
       throw new Error(`No such action : ${action.type}`);

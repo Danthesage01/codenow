@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 import NavLinks from "../NavLinks/NavLinks";
 import Logo from "../../components/Logo/Logo";
 import Wrapper from "./BigSidebarStyle";
+import { useAuthGlobalContext } from '../../context/authContext/authContext';
 const BigSidebar = () => {
-const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+const { isSidebarToggle } = useAuthGlobalContext();
   return (
     <Wrapper>
       <div
         className={
-          isSidebarOpen ? "sidebar-container" : "sidebar-container show-sidebar"
+          isSidebarToggle
+            ? "sidebar-container "
+            : "sidebar-container show-sidebar"
         }
       >
         <div className="content">
@@ -18,7 +21,8 @@ const [isSidebarOpen, setIsSidebarOpen] = useState(false)
           <NavLinks />
         </div>
       </div>
-    </Wrapper>)
+    </Wrapper>
+  );
 }
 
 export default BigSidebar

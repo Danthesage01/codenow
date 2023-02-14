@@ -7,15 +7,15 @@ import { useAuthGlobalContext } from "../../context/authContext/authContext";
 
 const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false);
-  const { logoutUser, user} = useAuthGlobalContext()
-  const [isOpen, setIsOpen] = useState(false)
+  const { logoutUser, user, toggleSidebar } =
+    useAuthGlobalContext()
   return (
     <Wrapper>
       <div className="nav-center">
         <button
           type="button"
           className="toggle-btn"
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={toggleSidebar}
         >
           <FaAlignLeft />
         </button>

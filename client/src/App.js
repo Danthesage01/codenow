@@ -17,6 +17,7 @@ import {
   SharedLayout,
   Profile,
   CourseStats,
+  TakeQuiz
 } from "./pages/Dashboard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -36,7 +37,7 @@ function App() {
         >
           <Route
             index
-            element={<CourseStats />}
+            element={<Profile />}
           />
           <Route
             path="add-course"
@@ -47,8 +48,12 @@ function App() {
             element={<AllCourses />}
           />
           <Route
-            path="profile"
-            element={<Profile />}
+            path="stats"
+            element={<CourseStats />}
+          />
+          <Route
+            path="take-quiz"
+            element={<TakeQuiz />}
           />
         </Route>
         <Route

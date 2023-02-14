@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Logo from "../../components/Logo/Logo";
 import {
   Div,
@@ -9,7 +9,6 @@ import {
   FormLink,
   Info
 } from "./RegisterStyles";
-import { useNavigate } from "react-router-dom";
 import FormRow from "../../components/FormRow/FormRow";
 import Button, { BUTTON_TYPE_CLASSES } from "../../components/Button/Button";
 import { useAuthGlobalContext } from "../../context/authContext/authContext";
@@ -68,7 +67,7 @@ const Register = () => {
     <Div>
       <Logo />
       <Section>
-        {isVerifyEmail? (
+        {user && isVerifyEmail? (
           <Info>
             <FormTitle>Check Your Email</FormTitle>
             <FormText>

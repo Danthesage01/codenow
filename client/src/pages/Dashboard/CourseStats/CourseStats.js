@@ -2,7 +2,7 @@ import React from 'react'
 
 const CourseStats = () => {
   return (
-    <div>courseStats</div>
+    <h1>Activity Stats</h1>
   )
 }
 

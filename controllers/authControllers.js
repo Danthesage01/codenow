@@ -22,12 +22,13 @@ const register = async (req, res) => {
 
   const user = await User.create({ email, name, password, verificationToken });
   // const origin = "http://localhost:3000";
+  const origin = "http://localhost:5000";
 
   await sendVerificationEmail({
     email: user.email,
     name: user.name,
     verificationToken: user.verificationToken,
-    origin: process.env.LOCAL_DEV_ORIGIN || process.env.DEPLOYED_ORIGIN,
+    origin: origin,
   });
 
   res.status(StatusCodes.CREATED).json({
@@ -90,6 +91,14 @@ const login = async (req, res) => {
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
+  const tempOrigin = req.get("origin");
+  const protocol = req.protocol;
+  const host = req.get("host");
+  const forwardedHost = req.get("x-forwarded-host");
+  const forwardedProtocol = req.get("x-forwarded-proto");
+
+  console.log(forwardedHost);
+
   if (!email) {
     throw new BadRequestError("Please provide a valid email");
   }
@@ -97,12 +106,12 @@ const forgotPassword = async (req, res) => {
 
   if (user) {
     const passwordToken = crypto.randomBytes(70).toString("hex");
-
+    const origin = "http://localhost:5000";
     sendResetPasswordEmail({
       name: user.name,
       email: user.email,
       token: passwordToken,
-      origin: process.env.LOCAL_DEV_ORIGIN || process.env.DEPLOYED_ORIGIN,
+      origin: origin,
     });
     const tenMinutes = 1000 * 60 * 10;
     const passwordTokenExpirtationDate = new Date(Date.now() + tenMinutes);
@@ -120,7 +129,14 @@ const forgotPassword = async (req, res) => {
 // Reset Password
 const resetPassword = async (req, res) => {
   const { token, email, password } = req.body;
-  console.log(token, email, password)
+  
+  // const tempOrigin = req.get("origin");
+  // const protocol = req.protocol;
+  // const host = req.get("host");
+  // const forwardedHost = req.get("x-forwarded-host");
+  // const forwardedProtocol = req.get("x-forwarded-proto");
+
+
 
   if (!token || !email || !password) {
     throw new BadRequestError("Please provide all values");
@@ -136,11 +152,11 @@ const resetPassword = async (req, res) => {
       // user.passwordToken = null
       // user.passwordTokenExpirtationDate = null
 
-      await user.save()
+      await user.save();
     }
   }
 
-  res.status(StatusCodes.OK).json({msg: "password reset successfully"});
+  res.status(StatusCodes.OK).json({ msg: "password reset successfully" });
 };
 
 // Get Current User

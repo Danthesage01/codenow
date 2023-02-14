@@ -6,7 +6,6 @@ import { Info, Section, Div } from "./ProtectedRouteStyle";
 
 const ProtectedRoute = ({ children }) => {
   const { user, userLoading } = useAuthGlobalContext();
-  console.log(user)
   if (userLoading) {
     return (
       <Div>

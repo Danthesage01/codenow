@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import { Logo } from "../../components";
 import { FaTimes } from "react-icons/fa";
 import NavLinks from "../NavLinks/NavLinks";
 import Wrapper from "./SmallSidebarStyle";
+import { useAuthGlobalContext } from "../../context/authContext/authContext";
 const SmallSidebar = () => {
-  const [isOpen, setIsOpen] = useState(true);
+const { isSidebarToggle, toggleSidebar } = useAuthGlobalContext();
 
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
+
 
   return (
     <Wrapper>
       <div
         className={
-          isOpen ? "sidebar-container show-sidebar" : "sidebar-container"
+          isSidebarToggle
+            ? "sidebar-container show-sidebar"
+            : "sidebar-container"
         }
       >
         <div className="content">
@@ -22,15 +23,15 @@ const SmallSidebar = () => {
             <button
               type="button"
               className="close-btn"
-              onClick={toggle}
+              onClick={toggleSidebar}
             >
               <FaTimes />
             </button>
             <header>
-            <Logo />
+              <Logo />
             </header>
           </div>
-          <NavLinks toggle={toggle} />
+          <NavLinks toggle={toggleSidebar} />
         </div>
       </div>
     </Wrapper>
